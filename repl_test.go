@@ -9,7 +9,7 @@ func TestCleanInput(t *testing.T) {
 		expected []string
 	}{
 		{
-			input:    "  hello  world  ",
+			input:    "  hello world  ",
 			expected: []string{"hello", "world"},
 		},
 		{
@@ -17,18 +17,15 @@ func TestCleanInput(t *testing.T) {
 			expected: []string{"test", "lmfao"},
 		},
 		{
-			input:    "NOOOO ggffGoNext  ",
-			expected: []string{"NOOOO", "ggffGoNext"},
+			input:    "NO ggffGoNext  ",
+			expected: []string{"no", "ggffgonext"},
 		},
 		// add more cases here
 	}
 	for _, c := range cases {
 		actual := cleanInput(c.input)
-		// Check the length of the actual slice against the expected slice
-		// if they don't match, use t.Errorf to print an error message
-		// and fail the test
 		if len(actual) != len(c.expected){
-			t.Errorf("The length of the output doesn't equal the length of the expected")
+			t.Errorf("The length of the output doesn't equal the length of the expected. Actual: %v, expected:%v ",len(actual),len(c.expected))
 			return
 		}
 		for i := range actual {

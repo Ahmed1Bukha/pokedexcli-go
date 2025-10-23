@@ -6,13 +6,20 @@ import (
 )
 
 func main(){
-	fmt.Println("Hello, World!")
+	output:= cleanInput("Hello World")
+
+	fmt.Println(output)
+	fmt.Println(len(output))
 }
 
 func cleanInput(text string) []string{
 	lowerdString := strings.ToLower(text)
 	
-	finalSlice:= []string{}
+	t := strings.TrimSpace(lowerdString)
+
+	finalSlice:= strings.Split(t," ")
+
+	
 
 	return finalSlice
 }
