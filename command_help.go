@@ -4,9 +4,7 @@ import "fmt"
 
 
 func commandHelp(config *Config)error{
-	fmt.Println(`Welcome to the Pokedex!
-Usage:
-`)
+	fmt.Printf(`Welcome to the Pokedex! \n Usage:\n`)
 for key,command:= range getCommands(){
 	fmt.Println(key+": "+command.description)
 }

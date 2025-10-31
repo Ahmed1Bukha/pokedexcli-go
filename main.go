@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/ahmed1bukha/pokedexcli-go/poki_cache"
 )
 
 type cliCommand struct {
@@ -15,15 +18,18 @@ type cliCommand struct {
 type Config struct{
 	Next string
 	Previous string
+	Cache *poki_cache.Cache 
 }
 
 
 func main(){
 	cliCommands:= getCommands()
-	configMap := &Config{
+	cfg := &Config{
 		Next: "https://pokeapi.co/api/v2/location-area/",
 		Previous: "",
 	 }
+	 cfg.Cache = poki_cache.NewCache(time.Duration(time.Duration.Seconds(10)))
+	
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -37,7 +43,7 @@ func main(){
 		if !ok{
 			fmt.Println("Unknown command")
 		} else{	
-			value.callback(configMap)
+			value.callback(cfg)
 		}
 	}
 }
