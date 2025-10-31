@@ -25,6 +25,12 @@ func commandExplore(config *Config)error{
 		if err !=nil {
 			return fmt.Errorf("coudn't get from get http")
 		}
+		jsonData,err := json.Marshal(result)
+		if err !=nil{
+			return fmt.Errorf("coudn't get from get http")
+		}
+		config.Cache.Add(result.Name,jsonData)
+
 	}
 
 	fmt.Println("Found Pokemon:")

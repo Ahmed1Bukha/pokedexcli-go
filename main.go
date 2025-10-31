@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/ahmed1bukha/pokedexcli-go/poki_cache"
+	"github.com/ahmed1bukha/pokedexcli-go/poki_http"
 )
 
 type cliCommand struct {
@@ -21,6 +22,8 @@ type Config struct{
 	url string
 	Cache *poki_cache.Cache 
 	Input string
+	pokemonUrl string
+	CathedPokemons map[string]poki_http.PokemonResponse
 }
 
 
@@ -31,6 +34,8 @@ func main(){
 		Previous: "",
 		url: "https://pokeapi.co/api/v2/location-area/",
 		Input: "",
+		pokemonUrl: "https://pokeapi.co/api/v2/pokemon/",
+		CathedPokemons: make(map[string]poki_http.PokemonResponse),
 	 }
 	 cfg.Cache = poki_cache.NewCache(time.Duration(time.Duration.Seconds(10)))
 	
@@ -82,8 +87,23 @@ func getCommands()map[string]cliCommand{
 		},
 		"explore":{
 			name:"explore",
-			description: "map the previous 20 location",
+			description: "explore map given name",
 			callback: commandExplore,
+		},
+		"catch":{
+			name:"catch",
+			description: "chance to get pokemon",
+			callback: commandCatch,
+		},
+		"inspect":{
+			name:"inspect",
+			description: "inspect poki info in your inventory",
+			callback: commandInspect,
+		},
+		"podex":{
+			name:"podex",
+			description: "get pokimons in inventory",
+			callback: commandPodex,
 		},
 	}
 }
