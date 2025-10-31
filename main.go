@@ -18,7 +18,9 @@ type cliCommand struct {
 type Config struct{
 	Next string
 	Previous string
+	url string
 	Cache *poki_cache.Cache 
+	Input string
 }
 
 
@@ -27,6 +29,8 @@ func main(){
 	cfg := &Config{
 		Next: "https://pokeapi.co/api/v2/location-area/",
 		Previous: "",
+		url: "https://pokeapi.co/api/v2/location-area/",
+		Input: "",
 	 }
 	 cfg.Cache = poki_cache.NewCache(time.Duration(time.Duration.Seconds(10)))
 	
@@ -43,7 +47,13 @@ func main(){
 		if !ok{
 			fmt.Println("Unknown command")
 		} else{	
-			value.callback(cfg)
+			if len(cleanedInput)>1 {
+				cfg.Input = cleanedInput[1]
+			}
+				value.callback(cfg)
+		
+			
+			
 		}
 	}
 }
@@ -69,6 +79,11 @@ func getCommands()map[string]cliCommand{
 			name:"mapb",
 			description: "map the previous 20 location",
 			callback: commandMapb,
+		},
+		"explore":{
+			name:"explore",
+			description: "map the previous 20 location",
+			callback: commandExplore,
 		},
 	}
 }

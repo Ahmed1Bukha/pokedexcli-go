@@ -15,6 +15,20 @@ type LocationArea struct{
 	Url string `json:"url"`
 }
 
+type LocationExploreResponse struct{
+	Name string `json:"name"`
+	Encounters []PokemonEncounter `json:"pokemon_encounters"`
+}
+
+
+type PokemonEncounter struct {
+	Pokemon NamedResource `json:"pokemon"`
+}
+type NamedResource struct {
+	Name string `json:"name"`
+	Url  string `json:"url"`
+}
+
 func GetLocationArea(url string) (LocationAreaResponse,error){
 	locationAreas,err:= getHttp[LocationAreaResponse](url)
 	if err !=nil {
@@ -22,4 +36,12 @@ func GetLocationArea(url string) (LocationAreaResponse,error){
 	}
 	
 	return *locationAreas,nil
+}
+
+func GetExploreArea(url string ,area string) (LocationExploreResponse, error){
+	exploreArea,err := getHttp[LocationExploreResponse](url+area)
+	if err !=nil {
+		return LocationExploreResponse{},fmt.Errorf("error with getting explore location")
+	}
+	return *exploreArea,nil
 }
